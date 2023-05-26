@@ -6,9 +6,8 @@ from sistema_recomendacao.recommendation_model import *
 
 app = FastAPI()
 
-# Carregando os pesos do modelo treinado
 num_products = 0
-with open(r'/home/rozatk/PycharmProjects/API_Recommend_Products/cliente.json') as f:
+with open(r'path_to_json_file') as f:
     data = json.load(f)
 
 products = set()
@@ -23,7 +22,7 @@ model = tf.keras.Sequential([
     tf.keras.layers.Dense(50, activation='relu'),
     tf.keras.layers.Dense(num_products, activation='softmax')
 ])
-model.load_weights(r'/home/rozatk/PycharmProjects/API_Recommend_Products/recommender.h5')
+model.load_weights(r'path_to_model_weights')
 
 
 @app.get("/recomendacoes/{celular}")
@@ -41,7 +40,7 @@ async def recomendacoes(celular: str):
 
     produtos_recomendados = [list(products)[sorted_predictions[i][0]] for i in range(10)]
 
-    return {"produtos_recomendados": produtos_recomendados}
+    return {"recommended products": produtos_recomendados}
 
 if __name__ == "__main__":
     import uvicorn
