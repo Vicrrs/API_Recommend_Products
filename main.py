@@ -6,7 +6,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from fastapi import FastAPI
 
 # Load data from JSON file
-with open('/home/victorroza/PycharmProjects/Api_recomenda/Files/cliente.json') as f:
+with open('path_to_json_file') as f:
     data = json.load(f)
 
 # Create dictionary with product IDs
