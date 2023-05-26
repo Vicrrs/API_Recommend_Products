@@ -2,7 +2,7 @@ import json
 import numpy as np
 import tensorflow as tf
 from fastapi import FastAPI
-from sistema_recomendacao.recommendation_model import *
+from recommendation_system.recommendation_model import *
 
 app = FastAPI()
 
