@@ -23,7 +23,7 @@ class TestAPI(unittest.TestCase):
             tf.keras.layers.Dense(50, activation='relu'),
             tf.keras.layers.Dense(self.num_products, activation='softmax')
         ])
-        self.model.load_weights(r'/home/rozatk/PycharmProjects/API_Recommend_Products/recommender.h5')
+        self.model.load_weights(r'path_to_model_weights')
 
     def test_recomendacoes(self):
         with patch('builtins.open', return_value=json.dumps(self.cliente_json)):
