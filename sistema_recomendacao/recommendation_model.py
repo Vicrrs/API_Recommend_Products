@@ -4,7 +4,7 @@ import tensorflow as tf
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.model_selection import train_test_split
 
-with open('/home/rozatk/PycharmProjects/API_Recommend_Products/cliente.json') as f:
+with open('path_to_json_file') as f:
     data = json.load(f)
 
 products = set()
