@@ -6,19 +6,19 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from fastapi import FastAPI
 
 # Load data from JSON file
-with open('path_to_json_file') as f:
+with open('/path_to_json_file') as f:
     data = json.load(f)
 
 # Create dictionary with product IDs
-products = {product for celular in data['resultado'] for product in data['resultado'][celular]}
+products = set(product for celular in data['resultado'] for product in data['resultado'][celular])
 product_to_id = {product: id for id, product in enumerate(products)}
 num_products = len(products)
 
 # Create dictionary with user-item interactions
 user_item_interactions = {celular: np.zeros(num_products) for celular in data['resultado']}
-for celular, celular_data in data['resultado'].items():
-    for product in celular_data:
-        user_item_interactions[celular][product_to_id.get(product, -1)] = 1.0
+for celular in data['resultado']:
+    for product in data['resultado'][celular]:
+        user_item_interactions[celular][product_to_id[product]] = 1.0
 
 # Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
@@ -69,9 +69,8 @@ async def recomendacoes(celular: str):
     user_interactions = np.zeros(num_products)
     if celular in data['resultado']:
         for product in data['resultado'][celular]:
-            product_id = product_to_id.get(product, -1)
-            if product_id != -1:
-                user_interactions[product_id] = 1.0
+            if product in product_to_id:
+                user_interactions[product_to_id[product]] = 1.0
 
     predictions = model.predict(np.array([user_interactions]))
 
